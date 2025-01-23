@@ -62,10 +62,7 @@ def test_add_to_card_with_login(login_through_api):
             data=payload
         )
 
-        allure.attach(body=json.dumps(response.json(), indent=4, ensure_ascii=True),
-                      name="Response",
-                      attachment_type=AttachmentType.JSON,
-                      extension="json")
+        allure.attach(body=response.text, name="Response", attachment_type=AttachmentType.TEXT, extension="txt")
         allure.attach(body=str(response.cookies), name="Cookies", attachment_type=AttachmentType.TEXT, extension="txt")
         logging.info(response.request.url)
         logging.info(response.status_code)
