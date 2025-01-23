@@ -79,7 +79,7 @@ def test_add_to_card_with_login(login_through_api):
 
 
     with allure.step("Checking if an item has been added to the cart with UI"):
-        browser.element('[class="product-name"]').should(have.text('$25 Virtual Gift Card'))
+        browser.element('.product-name').should(have.text('$25 Virtual Gift Card'))
 
     with allure.step("Clear shoping cart"):
         item = browser.element("[name='removefromcart'").get(value)
@@ -92,5 +92,5 @@ def test_add_to_card_with_login(login_through_api):
 
         browser.driver.add_cookie({"name": "Nop.customer", "value": cookie})
         browser.open(WEB_URL + "cart")
-        browser.element("[class='page shopping-cart-page'").should(have.text("Your Shopping Cart is empty!"))
+        browser.element('.shopping-cart-page').should(have.text("Your Shopping Cart is empty!"))
 
