@@ -32,6 +32,13 @@ def login_through_api():
     with allure.step("Verify successful authorization"):
         browser.element(".account").should(have.text(LOGIN))
 
+    yield
+
+    with allure.step("Delete cookies"):
+        browser.driver.delete_all_cookies()
+        assert len(browser.driver.get_cookies()) == 0
+
+
 
 def test_add_to_card_without_login():
     with allure.step("Add product to cart via API"):
@@ -40,22 +47,20 @@ def test_add_to_card_without_login():
                   "giftcard_2.SenderName": NAME,
                   "giftcard_2.SenderEmail": LOGIN,
                   "addtocart_2.EnteredQuantity": 1}
+
         result = requests.post(
             url=API_URL + "addproducttocart/details/2/1",
             data=payload
         )
 
-
     with allure.step("Get cookie from API"):
         cookie = result.cookies.get("Nop.customer")
-
 
     with allure.step("Set cookie from API"):
         browser.open(WEB_URL + "cart")
         browser.driver.add_cookie({"name": "Nop.customer", "value": cookie})
 
         browser.open(WEB_URL + "cart")
-
 
     with allure.step("Checking if an item has been added to the cart with UI"):
         browser.element('[class="product-name"]').should(have.text('$25 Virtual Gift Card'))
@@ -86,16 +91,13 @@ def test_add_to_card_with_login(login_through_api):
             data=payload
         )
 
-
     with allure.step("Get cookie from API"):
         cookie = result.cookies.get("Nop.customer")
-
 
     with allure.step("Set cookie from API"):
         browser.open(WEB_URL + "cart")
         browser.driver.add_cookie({"name": "Nop.customer", "value": cookie})
         browser.driver.add_cookie({"name": "NOPCOMMERCE.AUTH", "value": cookie})
-
         browser.open(WEB_URL + "cart")
 
 
