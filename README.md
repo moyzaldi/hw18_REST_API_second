@@ -5,12 +5,4 @@
 
 3. Задача со *: реализовать логирование реквеста в аллюр и в консоль https://demowebshop.tricentis.com/
 
-    with allure.step("Removing an item from the shopping cart"):
-        item= browser.element("[name='removefromcart'").get(value)
-        response3 = requests.post(
-            url=API_URL + "cart",
-            data={"removefromcart": item,
-                  "updatecart": "Update shopping cart"
-                                   }
-        )
-    time.sleep(5)
+    
